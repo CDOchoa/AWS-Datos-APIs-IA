@@ -1,362 +1,154 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Explorador Interactivo: Ecosistema de Datos de AWS</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CDochoa - Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background: #fff;
+            color: #111;
+            background-image: radial-gradient(#ccc 1px, transparent 1px);
+            background-size: 20px 20px;
         }
-        .chart-container {
-            position: relative;
-            width: 100%;
+
+        .container {
+            padding: 20px;
             max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 300px;
-            max-height: 400px;
+            margin: auto;
         }
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 350px;
-            }
+
+        .profile-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-top: 20px;
         }
-        .nav-link.active {
-            font-weight: 700;
-            color: #2563EB; /* blue-600 */
-            border-bottom-color: #2563EB;
+
+        h1 {
+            font-size: 2.5em;
+            margin: 10px 0 5px;
+            font-weight: bold;
         }
-        .service-card-content {
-            transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
+
+        h2 {
+            font-size: 1.5em;
+            font-weight: normal;
+            margin: 5px 0 20px;
         }
-        .service-card.open .service-card-content {
-            max-height: 1000px; /* Large enough to fit content */
-            opacity: 1;
+
+        section {
+            margin-bottom: 40px;
+        }
+
+        .about p {
+            font-size: 1em;
+            margin: 10px 0;
+            line-height: 1.5;
+            padding: 0 10px;
+        }
+
+        .social-media h2,
+        .about h2,
+        .tips h2,
+        .projects h2 { /* Added .projects */
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+
+        .social-media a,
+        .projects a { /* Applied to both social media and new project links */
+            display: block;
+            margin: 10px auto;
+            padding: 10px;
+            border: 2px solid #000;
+            width: 80%;
+            max-width: 300px;
+            text-decoration: none;
+            color: #000;
+            font-weight: bold;
+            border-radius: 6px;
+        }
+
+        .social-media i {
+            margin-right: 10px;
+        }
+
+        .tips-box {
+            border: 2px solid black;
+            padding: 20px;
+            width: 80%;
+            max-width: 300px;
+            margin: auto;
+            background: #fff;
+        }
+
+        .tips-box .icons {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .icons i {
+            margin: 0 10px;
+        }
+
+        .small {
+            font-size: 0.9em;
+            color: gray;
+            margin-top: 10px;
+        }
+
+        a {
+            color: inherit;
         }
     </style>
 </head>
-<body class="bg-stone-100 text-stone-800">
-    <!-- Chosen Palette: Warm Neutrals (bg-stone-100, text-stone-800) with Blue accents (bg-blue-600, text-blue-600) -->
-    <!-- Application Structure Plan: A single-page application with a fixed top navigation bar for thematic exploration. The structure is based on the data lifecycle and key technological areas (APIs, AI, Governance) rather than the linear report chapters. This thematic approach allows users to quickly jump to areas of interest. The core interaction involves clicking on visual elements (like lifecycle stages or service cards) to reveal detailed information, promoting an exploratory user flow instead of passive reading. This design was chosen to break down complex information into digestible, interconnected chunks, enhancing usability and knowledge retention. -->
-    <!-- Visualization & Content Choices: Report Info -> Goal -> Viz/Presentation Method -> Interaction -> Justification -> Library/Method. 1. API Gateway Comparison -> Compare cost/latency -> Horizontal Bar Chart (Chart.js) -> Hover for details -> Visually represents trade-offs better than a table. 2. Data Lifecycle -> Organize services -> Interactive Diagram (HTML/CSS) -> Click stage to filter services -> Provides a mental model for how services relate. 3. Service Details -> Inform -> Clickable Cards (HTML/JS) -> Click to expand/collapse -> Manages information density and allows user-driven exploration. 4. AI Service Categories -> Organize -> Grouped Card Layout (HTML/CSS) -> Visual grouping -> Clarifies the different types of AI offerings at a glance. -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+<body>
+    <div class="container">
+        <img src="profile.png" alt="Profile Picture" class="profile-img" />
+        <h1>CDochoa</h1>
+        <h2>Data Analyst & Developer Backend</h2>
 
-    <div id="app" class="container mx-auto p-4 md:p-8">
-        
-        <header class="text-center mb-8 sticky top-0 bg-stone-100/80 backdrop-blur-sm z-10 py-4 border-b border-stone-200">
-            <h1 class="text-3xl md:text-4xl font-bold text-blue-900">Ecosistema de Datos de AWS</h1>
-            <p class="text-stone-600 mt-2">Una guía interactiva para la Ingeniería de Datos, APIs e Inteligencia Artificial.</p>
-            <nav id="main-nav" class="mt-6">
-                <ul class="flex flex-wrap justify-center gap-4 md:gap-8 text-sm md:text-base">
-                    <li><a href="#vision-general" class="nav-link pb-2 border-b-2 border-transparent hover:border-blue-500 transition-colors">Visión General</a></li>
-                    <li><a href="#ciclo-de-vida" class="nav-link pb-2 border-b-2 border-transparent hover:border-blue-500 transition-colors">Ciclo de Vida del Dato</a></li>
-                    <li><a href="#creador-apis" class="nav-link pb-2 border-b-2 border-transparent hover:border-blue-500 transition-colors">Creador de APIs</a></li>
-                    <li><a href="#inteligencia-artificial" class="nav-link pb-2 border-b-2 border-transparent hover:border-blue-500 transition-colors">Inteligencia Artificial</a></li>
-                    <li><a href="#gobernanza-costos" class="nav-link pb-2 border-b-2 border-transparent hover:border-blue-500 transition-colors">Gobernanza y Costos</a></li>
-                </ul>
-            </nav>
-        </header>
+        <section class="about">
+            <h2>About Me</h2>
+            <p>IT Support Specialist | Data Analyst | Blockchain, AI and Data Science Enthusiast</p>
+            <p>Too interested in Blockchain & development and search for renewable electrical energy, its transmission and the area of telecommunications.</p>
+        </section>
 
-        <main>
-            <section id="vision-general" class="pt-16 -mt-16 mb-12">
-                <h2 class="text-2xl font-bold text-center mb-6 text-blue-800">Visión General del Ecosistema</h2>
-                <div class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-md">
-                    <p class="mb-4">Amazon Web Services (AWS) ofrece un ecosistema integral y escalable que abarca todo el ciclo de vida de los datos. Desde el almacenamiento masivo y el procesamiento en tiempo real hasta la inteligencia artificial y la exposición segura de datos a través de APIs, AWS proporciona una suite de servicios mayormente gestionados y sin servidor. Este enfoque permite a las organizaciones optimizar costos, reducir la carga operativa y acelerar la innovación.</p>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center mt-6">
-                        <div class="bg-blue-50 p-4 rounded-lg">
-                            <p class="text-2xl font-bold text-blue-700">99.999999999%</p>
-                            <p class="text-sm text-stone-600">Durabilidad de datos en S3</p>
-                        </div>
-                        <div class="bg-green-50 p-4 rounded-lg">
-                            <p class="text-2xl font-bold text-green-700">Sin Servidor</p>
-                            <p class="text-sm text-stone-600">Enfoque principal para agilidad</p>
-                        </div>
-                        <div class="bg-amber-50 p-4 rounded-lg">
-                            <p class="text-2xl font-bold text-amber-700">Pago por Uso</p>
-                            <p class="text-sm text-stone-600">Modelo de costo flexible</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+        <section class="social-media">
+            <h2>Social Media</h2>
+            <a href="https://twitter.com/CD_Ochoa" target="_blank"><i class="fab fa-twitter"></i>@CD_Ochoa</a>
+            <a href="https://github.com/CDOchoa" target="_blank"><i class="fab fa-github"></i>CDOchoa</a>
+        </section>
 
-            <section id="ciclo-de-vida" class="pt-16 -mt-16 mb-12">
-                <h2 class="text-2xl font-bold text-center mb-2 text-blue-800">Explora el Ciclo de Vida del Dato</h2>
-                <p class="text-center text-stone-600 mb-8">Haz clic en una etapa para ver los servicios clave de AWS asociados.</p>
-                <div id="lifecycle-nav" class="flex flex-wrap items-center justify-center gap-2 md:gap-4 mb-8">
-                    <button data-stage="ingest" class="lifecycle-stage-btn bg-white hover:bg-blue-100 text-blue-700 font-semibold py-2 px-4 border border-blue-200 rounded-lg shadow-sm transition-all">Ingesta</button>
-                    <span class="text-2xl text-stone-400 font-light">&rarr;</span>
-                    <button data-stage="storage" class="lifecycle-stage-btn bg-white hover:bg-blue-100 text-blue-700 font-semibold py-2 px-4 border border-blue-200 rounded-lg shadow-sm transition-all">Almacenamiento</button>
-                    <span class="text-2xl text-stone-400 font-light">&rarr;</span>
-                    <button data-stage="process" class="lifecycle-stage-btn bg-white hover:bg-blue-100 text-blue-700 font-semibold py-2 px-4 border border-blue-200 rounded-lg shadow-sm transition-all">Procesamiento</button>
-                    <span class="text-2xl text-stone-400 font-light">&rarr;</span>
-                    <button data-stage="analyze" class="lifecycle-stage-btn bg-white hover:bg-blue-100 text-blue-700 font-semibold py-2 px-4 border border-blue-200 rounded-lg shadow-sm transition-all">Análisis y Consulta</button>
+        <section class="tips">
+            <h2>Tips</h2>
+            <div class="tips-box">
+                <div class="icons">
+                    <i class="fab fa-bitcoin"></i>
+                    <i class="fab fa-bitcoin"></i>
+                    <i class="fab fa-ethereum"></i>
+                    <i class="fab fa-litecoin"></i>
+                    <i class="fab fa-xrp"></i>
                 </div>
-                <div id="lifecycle-services" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                </div>
-            </section>
+                <p><strong>mycdochoa.blockchain</strong></p>
+            </div>
+            <p class="small">
+                Get your own <code>.crypto</code> domain at
+                <a href="https://unstoppabledomains.com" target="_blank">unstoppabledomains.com</a>
+            </p>
+        </section>
 
-            <section id="creador-apis" class="pt-16 -mt-16 mb-12">
-                <h2 class="text-2xl font-bold text-center mb-6 text-blue-800">Creador de APIs: Exponiendo tus Datos</h2>
-                 <p class="text-center text-stone-600 mb-8 max-w-3xl mx-auto">AWS proporciona herramientas robustas para crear, gestionar y asegurar APIs. API Gateway es ideal para APIs REST y WebSocket, mientras que AppSync brilla para APIs GraphQL modernas que necesitan obtener datos de múltiples fuentes de forma eficiente.</p>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-                    <div class="bg-white p-6 rounded-lg shadow-md">
-                        <h3 class="font-bold text-lg mb-4">Comparativa: API Gateway (HTTP vs REST)</h3>
-                        <p class="text-sm text-stone-600 mb-4">Las APIs HTTP están optimizadas para cargas de trabajo sin servidor, ofreciendo menor latencia y costo, mientras que las APIs REST proporcionan características de gestión más avanzadas.</p>
-                        <div class="chart-container h-64 md:h-80">
-                            <canvas id="apiGatewayChart"></canvas>
-                        </div>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg shadow-md">
-                        <h3 class="font-bold text-lg mb-4">Patrones de Integración Comunes</h3>
-                        <div class="space-y-4">
-                            <div class="p-4 bg-stone-50 rounded-lg">
-                                <h4 class="font-semibold">API Gateway + Lambda (Síncrono)</h4>
-                                <p class="text-sm text-stone-600">Para respuestas inmediatas. La API recibe una petición, invoca una función Lambda y devuelve la respuesta directamente.</p>
-                            </div>
-                            <div class="p-4 bg-stone-50 rounded-lg">
-                                <h4 class="font-semibold">SQS (Colas de Mensajes)</h4>
-                                <p class="text-sm text-stone-600">Desacopla servicios. Un servicio envía un mensaje a una cola, y otro servicio lo procesa de forma asíncrona.</p>
-                            </div>
-                            <div class="p-4 bg-stone-50 rounded-lg">
-                                <h4 class="font-semibold">SNS (Notificaciones)</h4>
-                                <p class="text-sm text-stone-600">Patrón Publicar/Suscribir. Un evento se publica en un "tópico" y se envía a múltiples suscriptores (Lambda, SQS, etc.).</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="inteligencia-artificial" class="pt-16 -mt-16 mb-12">
-                <h2 class="text-2xl font-bold text-center mb-6 text-blue-800">Potencia con Inteligencia Artificial</h2>
-                <p class="text-center text-stone-600 mb-8 max-w-3xl mx-auto">AWS democratiza la IA y el Machine Learning, ofreciendo desde una plataforma completa como SageMaker hasta servicios pre-entrenados que se integran fácilmente en cualquier aplicación para añadir capacidades inteligentes.</p>
-                <div id="ai-services" class="space-y-8">
-                </div>
-            </section>
-
-            <section id="gobernanza-costos" class="pt-16 -mt-16">
-                <h2 class="text-2xl font-bold text-center mb-6 text-blue-800">Gobernanza, Seguridad y Costos</h2>
-                <p class="text-center text-stone-600 mb-8 max-w-3xl mx-auto">Una base sólida para cualquier arquitectura de datos implica un control estricto sobre el acceso, la auditoría y los costos. AWS proporciona herramientas para gestionar estos aspectos de forma centralizada.</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="bg-white p-6 rounded-lg shadow-md">
-                        <h3 class="font-bold text-lg mb-2">AWS Lake Formation</h3>
-                        <p class="text-sm text-stone-600">Centraliza la seguridad y la gestión de acceso a tu data lake, permitiendo permisos granulares a nivel de tabla, columna e incluso fila.</p>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg shadow-md">
-                        <h3 class="font-bold text-lg mb-2">AWS CloudTrail</h3>
-                        <p class="text-sm text-stone-600">Registra toda la actividad de la API en tu cuenta, proporcionando un rastro de auditoría completo para seguridad y cumplimiento normativo.</p>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg shadow-md">
-                        <h3 class="font-bold text-lg mb-2">Modelo de Precios</h3>
-                        <p class="text-sm text-stone-600">La mayoría de los servicios operan bajo un modelo de "pago por uso", eliminando grandes inversiones iniciales y alineando los costos con el consumo real.</p>
-                    </div>
-                </div>
-            </section>
-        </main>
+        <section class="projects">
+            <h2>Proyectos / Exploradores</h2>
+            <a href="SobreAWs.html">Explorador Interactivo: Ecosistema de Datos de AWS</a>
+        </section>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const servicesData = {
-                ingest: [
-                    { name: 'Amazon Kinesis', desc: 'Captura, procesa y almacena datos de streaming en tiempo real. Ideal para analítica en vivo, IoT y logs.' },
-                    { name: 'Amazon MSK', desc: 'Servicio gestionado para Apache Kafka, para construir y ejecutar aplicaciones que usan Kafka para procesar streams de datos.' },
-                    { name: 'AWS DMS', desc: 'Migra bases de datos a AWS de forma rápida y segura, con mínimo tiempo de inactividad.' }
-                ],
-                storage: [
-                    { name: 'Amazon S3', desc: 'Almacenamiento de objetos escalable para data lakes, backups y aplicaciones. Durabilidad y disponibilidad líderes en la industria.' },
-                    { name: 'Amazon Redshift', desc: 'Data warehouse a escala de petabytes para análisis de negocio (BI) y consultas complejas sobre grandes volúmenes de datos.' },
-                    { name: 'Amazon DynamoDB', desc: 'Base de datos NoSQL de clave-valor con latencia de milisegundos, ideal para aplicaciones web, móviles y de gaming a gran escala.' }
-                ],
-                process: [
-                    { name: 'AWS Glue', desc: 'Servicio ETL sin servidor para descubrir, preparar y combinar datos para análisis, machine learning y desarrollo de aplicaciones.' },
-                    { name: 'AWS Lambda', desc: 'Ejecuta código en respuesta a eventos sin gestionar servidores. Perfecto para micro-ETL y procesamiento en tiempo real.' },
-                    { name: 'Amazon EMR', desc: 'Plataforma de big data en la nube para procesar grandes cantidades de datos usando herramientas como Apache Spark y Hadoop.' }
-                ],
-                analyze: [
-                    { name: 'Amazon Athena', desc: 'Consulta datos en S3 usando SQL estándar de forma interactiva. Sin servidor, pagas solo por las consultas que ejecutas.' },
-                    { name: 'Amazon QuickSight', desc: 'Servicio de Business Intelligence (BI) que permite crear y publicar paneles interactivos y visualizaciones de datos.' }
-                ]
-            };
-
-            const aiServicesData = [
-                {
-                    category: 'Plataforma de Machine Learning',
-                    services: [
-                        { name: 'Amazon SageMaker', desc: 'Construye, entrena y despliega modelos de Machine Learning a escala. Una plataforma integral para todo el ciclo de vida de ML.' }
-                    ]
-                },
-                {
-                    category: 'IA Pre-entrenada: Visión y Lenguaje',
-                    services: [
-                        { name: 'Amazon Rekognition', desc: 'Analiza imágenes y videos para identificar objetos, personas, texto y actividades.' },
-                        { name: 'Amazon Comprehend', desc: 'Usa Procesamiento de Lenguaje Natural (NLP) para extraer insights y relaciones del texto.' },
-                        { name: 'Amazon Textract', desc: 'Extrae texto, formularios y tablas de documentos escaneados automáticamente (OCR avanzado).' },
-                        { name: 'Amazon Transcribe', desc: 'Convierte voz a texto de alta calidad.' },
-                    ]
-                },
-                {
-                    category: 'IA Generativa',
-                    services: [
-                         { name: 'Amazon Bedrock', desc: 'Accede y personaliza modelos fundacionales (FM) de alto rendimiento para construir aplicaciones de IA generativa.' },
-                         { name: 'Amazon Q', desc: 'Asistente de IA generativa para el trabajo, adaptable a las necesidades de tu negocio.' }
-                    ]
-                }
-            ];
-
-            const lifecycleServicesContainer = document.getElementById('lifecycle-services');
-            const lifecycleNavButtons = document.querySelectorAll('.lifecycle-stage-btn');
-
-            function renderServices(stage) {
-                lifecycleServicesContainer.innerHTML = '';
-                const services = servicesData[stage] || [];
-                services.forEach(service => {
-                    const card = document.createElement('div');
-                    card.className = 'service-card bg-white p-6 rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow';
-                    card.innerHTML = `
-                        <h3 class="font-bold text-lg">${service.name}</h3>
-                        <div class="service-card-content">
-                            <p class="text-sm text-stone-600 mt-2">${service.desc}</p>
-                        </div>
-                    `;
-                    lifecycleServicesContainer.appendChild(card);
-                    card.addEventListener('click', () => card.classList.toggle('open'));
-                });
-            }
-
-            lifecycleNavButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const stage = button.dataset.stage;
-                    lifecycleNavButtons.forEach(btn => btn.classList.remove('bg-blue-200', 'font-bold'));
-                    button.classList.add('bg-blue-200', 'font-bold');
-                    renderServices(stage);
-                });
-            });
-
-            function renderAiServices() {
-                const container = document.getElementById('ai-services');
-                container.innerHTML = '';
-                aiServicesData.forEach(categoryData => {
-                    const section = document.createElement('div');
-                    section.innerHTML = `<h3 class="text-xl font-semibold mb-4 text-blue-700">${categoryData.category}</h3>`;
-                    
-                    const grid = document.createElement('div');
-                    grid.className = 'grid grid-cols-1 md:grid-cols-2 gap-6';
-
-                    categoryData.services.forEach(service => {
-                        const card = document.createElement('div');
-                        card.className = 'service-card bg-white p-6 rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow';
-                        card.innerHTML = `
-                            <h4 class="font-bold text-lg">${service.name}</h4>
-                            <div class="service-card-content">
-                                <p class="text-sm text-stone-600 mt-2">${service.desc}</p>
-                            </div>
-                        `;
-                        grid.appendChild(card);
-                        card.addEventListener('click', () => card.classList.toggle('open'));
-                    });
-                    
-                    section.appendChild(grid);
-                    container.appendChild(section);
-                });
-            }
-
-            function renderApiGatewayChart() {
-                const ctx = document.getElementById('apiGatewayChart').getContext('2d');
-                new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: ['Costo', 'Latencia'],
-                        datasets: [
-                            {
-                                label: 'API HTTP',
-                                data: [29, 40],
-                                backgroundColor: 'rgba(59, 130, 246, 0.7)',
-                                borderColor: 'rgba(59, 130, 246, 1)',
-                                borderWidth: 1
-                            },
-                            {
-                                label: 'API REST',
-                                data: [100, 100],
-                                backgroundColor: 'rgba(209, 213, 219, 0.7)',
-                                borderColor: 'rgba(107, 114, 128, 1)',
-                                borderWidth: 1
-                            }
-                        ]
-                    },
-                    options: {
-                        indexAxis: 'y',
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            x: {
-                                beginAtZero: true,
-                                title: {
-                                    display: true,
-                                    text: 'Valor Relativo (REST API = 100)'
-                                }
-                            }
-                        },
-                        plugins: {
-                            legend: {
-                                position: 'top',
-                            },
-                            tooltip: {
-                                callbacks: {
-                                    label: function(context) {
-                                        let label = context.dataset.label || '';
-                                        if (label) {
-                                            label += ': ';
-                                        }
-                                        if (context.parsed.x !== null) {
-                                            if (context.dataset.label === 'API HTTP') {
-                                                const savings = 100 - context.parsed.x;
-                                                label += `~${savings}% más bajo`;
-                                            } else {
-                                                label += 'Base de referencia';
-                                            }
-                                        }
-                                        return label;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                });
-            }
-
-            const sections = document.querySelectorAll('main section');
-            const navLinks = document.querySelectorAll('.nav-link');
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        navLinks.forEach(link => {
-                            link.classList.remove('active');
-                            if (link.getAttribute('href').substring(1) === entry.target.id) {
-                                link.classList.add('active');
-                            }
-                        });
-                    }
-                });
-            }, { rootMargin: "-50% 0px -50% 0px" });
-
-            sections.forEach(section => {
-                observer.observe(section);
-            });
-            
-            lifecycleNavButtons[1].click();
-            renderAiServices();
-            renderApiGatewayChart();
-        });
-    </script>
 </body>
 </html>
