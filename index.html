@@ -3,18 +3,39 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>CDochoa - Portfolio</title>
+    <title data-lang-en="CDochoa - Portfolio" data-lang-es="CDochoa - Portafolio">CDochoa - Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
+        :root {
+            /* Light Mode Variables */
+            --bg-color: #fff;
+            --text-color: #111;
+            --gradient-color: #ccc;
+            --link-hover-color: #007bff;
+            --box-border-color: #000;
+            --box-bg-color: #fff;
+        }
+
+        /* Dark Mode Variables */
+        body.dark-mode {
+            --bg-color: #1a1a1a;
+            --text-color: #e0e0e0;
+            --gradient-color: #333;
+            --link-hover-color: #66b3ff;
+            --box-border-color: #555;
+            --box-bg-color: #2a2a2a;
+        }
+
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
             text-align: center;
-            background: #fff;
-            color: #111;
-            background-image: radial-gradient(#ccc 1px, transparent 1px);
+            background: var(--bg-color);
+            color: var(--text-color);
+            background-image: radial-gradient(var(--gradient-color) 1px, transparent 1px);
             background-size: 20px 20px;
+            transition: background-color 0.3s, color 0.3s; /* Smooth transition for theme change */
         }
 
         .container {
@@ -23,33 +44,72 @@
             margin: auto;
         }
 
-        /* --- Navigation Bar Styles --- */
-        .top-nav {
-            position: absolute; /* Position relative to the nearest positioned ancestor (body if none) */
+        /* --- Top-Left Utilities Styles (Language & Theme Toggles) --- */
+        .top-left-utilities {
+            position: absolute;
             top: 20px;
-            right: 20px;
-            z-index: 1000; /* Ensure it stays on top */
+            left: 20px; /* Positioned to the left */
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 15px; /* Space between utility groups */
+        }
+
+        .lang-switcher, .theme-switcher {
+            display: flex;
+            gap: 5px;
+        }
+
+        .lang-switcher button, .theme-switcher button {
+            background: none;
+            border: 1px solid var(--box-border-color);
+            color: var(--text-color);
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+
+        .lang-switcher button:hover, .theme-switcher button:hover {
+            background-color: var(--link-hover-color);
+            color: white;
+            border-color: var(--link-hover-color);
+        }
+
+        .lang-switcher button.active {
+            background-color: var(--link-hover-color);
+            color: white;
+            border-color: var(--link-hover-color);
+        }
+
+        /* --- Top-Right Navigation Bar Styles --- */
+        .top-nav {
+            position: absolute;
+            top: 20px;
+            right: 20px; /* Positioned to the right */
+            z-index: 1000;
         }
 
         .top-nav ul {
             list-style: none;
             margin: 0;
             padding: 0;
-            display: flex; /* Arrange items in a row */
-            gap: 15px; /* Space between links */
+            display: flex;
+            gap: 15px;
         }
 
         .top-nav a {
             text-decoration: none;
-            color: #000;
+            color: var(--text-color);
             font-weight: bold;
             padding: 5px 10px;
-            border-bottom: 2px solid transparent; /* For hover effect */
-            transition: border-bottom 0.3s ease;
+            border-bottom: 2px solid transparent;
+            transition: border-bottom 0.3s ease, color 0.3s;
         }
 
         .top-nav a:hover {
-            border-bottom: 2px solid #007bff; /* Highlight on hover */
+            border-bottom: 2px solid var(--link-hover-color);
         }
 
         /* --- Existing Styles (adjustments for content below header if needed) --- */
@@ -58,7 +118,7 @@
             height: 200px;
             border-radius: 50%;
             object-fit: cover;
-            margin-top: 50px; /* Increased margin to avoid overlap with nav */
+            margin-top: 50px; /* Ensure content starts below floating elements */
         }
 
         h1 {
@@ -75,7 +135,7 @@
 
         section {
             margin-bottom: 40px;
-            padding-top: 20px; /* Add padding for anchor links to prevent content being hidden under fixed nav */
+            padding-top: 20px;
         }
 
         .about p {
@@ -88,24 +148,32 @@
         .social-media h2,
         .about h2,
         .tips h2,
-        .projects h2,
-        .help h2 { /* Added .help */
+        .help h2 {
             font-size: 1.8em;
             font-weight: bold;
         }
 
+        /* Reusing social-media a style for contact link for consistency */
         .social-media a,
-        .projects a {
+        .contact-link { /* Added .contact-link to this selector */
             display: block;
             margin: 10px auto;
             padding: 10px;
-            border: 2px solid #000;
+            border: 2px solid var(--box-border-color);
             width: 80%;
             max-width: 300px;
             text-decoration: none;
-            color: #000;
+            color: var(--text-color);
             font-weight: bold;
             border-radius: 6px;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+
+        .social-media a:hover,
+        .contact-link:hover { /* Added .contact-link to this selector */
+            background-color: var(--link-hover-color);
+            color: white;
+            border-color: var(--link-hover-color);
         }
 
         .social-media i {
@@ -113,12 +181,13 @@
         }
 
         .tips-box {
-            border: 2px solid black;
+            border: 2px solid var(--box-border-color);
             padding: 20px;
             width: 80%;
             max-width: 300px;
             margin: auto;
-            background: #fff;
+            background: var(--box-bg-color);
+            transition: background-color 0.3s, border-color 0.3s;
         }
 
         .tips-box .icons {
@@ -132,7 +201,7 @@
 
         .small {
             font-size: 0.9em;
-            color: gray;
+            color: gray; /* Keep grey for readability on both modes */
             margin-top: 10px;
         }
 
@@ -142,33 +211,43 @@
     </style>
 </head>
 <body>
+    <div class="top-left-utilities">
+        <div class="lang-switcher">
+            <button id="lang-en" class="active">EN</button>
+            <button id="lang-es">ES</button>
+        </div>
+        <div class="theme-switcher">
+            <button id="theme-toggle"><i class="fas fa-moon"></i></button>
+        </div>
+    </div>
+
     <nav class="top-nav">
         <ul>
-            <li><a href="#projects">Proyectos</a></li>
-            <li><a href="SobreAWs.html">SobreAWS</a></li>
-            <li><a href="#help">Ayuda</a></li>
+            <li><a href="#about" data-lang-en="Projects" data-lang-es="Proyectos">Projects</a></li>
+            <li><a href="SobreAWs.html" data-lang-en="About AWS" data-lang-es="Sobre AWS">About AWS</a></li>
+            <li><a href="#help" data-lang-en="Help" data-lang-es="Ayuda">Help</a></li>
         </ul>
     </nav>
 
     <div class="container">
-        <img src="profile.png" alt="Profile Picture" class="profile-img" />
+        <img src="profile.jpeg" alt="Profile Picture" class="profile-img" />
         <h1>CDochoa</h1>
-        <h2>Data Analyst & Developer Backend</h2>
+        <h2 data-lang-en="Data Analyst & Developer Backend" data-lang-es="Analista de Datos y Desarrollador Backend">Data Analyst & Developer Backend</h2>
 
-        <section class="about">
-            <h2>About Me</h2>
-            <p>IT Support Specialist | Data Analyst | Blockchain, AI and Data Science Enthusiast</p>
-            <p>Too interested in Blockchain & development and search for renewable electrical energy, its transmission and the area of telecommunications.</p>
+        <section id="about" class="about">
+            <h2 data-lang-en="About Me" data-lang-es="Sobre Mí">About Me</h2>
+            <p data-lang-en="IT Support Specialist | Data Analyst | Blockchain, AI and Data Science Enthusiast" data-lang-es="Especialista en Soporte de TI | Analista de Datos | Entusiasta de Blockchain, IA y Ciencia de Datos">IT Support Specialist | Data Analyst | Blockchain, AI and Data Science Enthusiast</p>
+            <p data-lang-en="Too interested in Blockchain & development and search for renewable electrical energy, its transmission and the area of telecommunications." data-lang-es="Demasiado interesado en Blockchain y el desarrollo, y la búsqueda de energía eléctrica renovable, su transmisión y el área de las telecomunicaciones.">Too interested in Blockchain & development and search for renewable electrical energy, its transmission and the area of telecommunications.</p>
         </section>
 
         <section class="social-media">
-            <h2>Social Media</h2>
+            <h2 data-lang-en="Social Media" data-lang-es="Redes Sociales">Social Media</h2>
             <a href="https://twitter.com/CD_Ochoa" target="_blank"><i class="fab fa-twitter"></i>@CD_Ochoa</a>
             <a href="https://github.com/CDOchoa" target="_blank"><i class="fab fa-github"></i>CDOchoa</a>
         </section>
 
         <section class="tips">
-            <h2>Tips</h2>
+            <h2 data-lang-en="Tips" data-lang-es="Método de Pago">Tips</h2>
             <div class="tips-box">
                 <div class="icons">
                     <i class="fab fa-bitcoin"></i>
@@ -179,22 +258,97 @@
                 </div>
                 <p><strong>mycdochoa.blockchain</strong></p>
             </div>
-            <p class="small">
-                Get your own <code>.crypto</code> domain at
-                <a href="https://unstoppabledomains.com" target="_blank">unstoppabledomains.com</a>
+            <p class="small" data-lang-en="You can donate `crypto` through my domain. Crypto payments are also accepted." data-lang-es="Puedes donarme cripto a través de mi dominio. También acepto pagos cripto.">
+                You can donate `crypto` through my domain. Crypto payments are also accepted.
+                <a href="https://unstoppabledomains.com" target="_blank">mycdochoa.blockchain</a>
             </p>
         </section>
 
-        <section id="projects" class="projects">
-            <h2>Proyectos / Exploradores</h2>
-            <a href="SobreAWs.html">Explorador Interactivo: Ecosistema de Datos de AWS</a>
-            </section>
-
         <section id="help" class="help">
-            <h2>Ayuda y Contacto</h2>
-            <p>Si tienes preguntas o necesitas asistencia, no dudes en contactarme a través de mis redes sociales o enviándome un correo electrónico a: <a href="mailto:tu.email@ejemplo.com">tu.email@ejemplo.com</a>.</p>
-            <p>También puedes encontrar más información sobre mis proyectos y habilidades en mi perfil de <a href="https://linkedin.com/in/cdochoa" target="_blank">LinkedIn</a>.</p>
+            <h2 data-lang-en="Help and Contact" data-lang-es="Ayuda y Contacto">Help and Contact</h2>
+            <p data-lang-en="If you have questions or need assistance, feel free to contact me directly on my LinkedIn profile:" data-lang-es="Si tienes preguntas o necesitas asistencia, no dudes en contactarme directamente a través de mi perfil de LinkedIn:">If you have questions or need assistance, feel free to contact me directly on my LinkedIn profile:</p>
+            <a href="https://www.linkedin.com/in/cd-ochoa/" target="_blank" class="contact-link">
+                <i class="fab fa-linkedin"></i> <span data-lang-en="Connect on LinkedIn" data-lang-es="Conectar en LinkedIn">Connect on LinkedIn</span>
+            </a>
         </section>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Language Toggle Logic ---
+            const langButtons = document.querySelectorAll('.lang-switcher button');
+            const storedLang = localStorage.getItem('portfolioLang') || 'en';
+
+            const applyLanguage = (lang) => {
+                document.documentElement.lang = lang; // Set HTML lang attribute
+                document.querySelectorAll('[data-lang-en], [data-lang-es]').forEach(element => {
+                    const text = element.getAttribute(`data-lang-${lang}`);
+                    if (text !== null) { // Check if attribute exists
+                        if (element.tagName === 'TITLE') { // Handle title separately
+                            document.title = text;
+                        } else {
+                            // This part tries to preserve child elements (like <a> or <i> tags) while updating text
+                            // It's a more robust way to handle mixed content
+                            const tempDiv = document.createElement('div');
+                            tempDiv.innerHTML = text; // Create a temporary element with the translated HTML string
+
+                            // If the element's original content was just text, replace it directly
+                            if (element.children.length === 0 || !element.innerHTML.includes('<')) {
+                                element.textContent = text;
+                            } else {
+                                // Otherwise, replace specific text nodes or reconstruct
+                                // For simplicity and to avoid over-complication, if the element already has
+                                // HTML content (like <a> tags within a <p>), we assume the data-lang- attribute
+                                // also contains the full HTML structure for that language.
+                                element.innerHTML = text; // Replaces current HTML with the translated HTML
+                            }
+                        }
+                    }
+                });
+
+                langButtons.forEach(button => {
+                    button.classList.remove('active');
+                    if (button.id.endsWith(lang)) {
+                        button.classList.add('active');
+                    }
+                });
+            };
+
+            langButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const lang = button.id.replace('lang-', '');
+                    localStorage.setItem('portfolioLang', lang);
+                    applyLanguage(lang);
+                });
+            });
+
+            // Initial language application
+            applyLanguage(storedLang);
+
+            // --- Theme Toggle Logic ---
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const storedTheme = localStorage.getItem('portfolioTheme') || 'light';
+
+            const applyTheme = (theme) => {
+                if (theme === 'dark') {
+                    document.body.classList.add('dark-mode');
+                    themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>'; // Sun icon for light mode
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>'; // Moon icon for dark mode
+                }
+            };
+
+            themeToggleBtn.addEventListener('click', () => {
+                let currentTheme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+                let newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                localStorage.setItem('portfolioTheme', newTheme);
+                applyTheme(newTheme);
+            });
+
+            // Initial theme application
+            applyTheme(storedTheme);
+        });
+    </script>
 </body>
 </html>
