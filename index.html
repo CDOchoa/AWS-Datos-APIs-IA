@@ -29,34 +29,40 @@
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
-            /* Añadido padding-top para asegurar espacio para los elementos superiores */
-            padding-top: 100px; /* Suficiente espacio para los elementos absolutos superiores */
-            padding-left: 0; /* Asegurar que no haya padding por defecto en los lados */
-            padding-right: 0; /* Asegurar que no haya padding por defecto en los lados */
+            /* Padding-top para escritorio, se ajustará en media query para móvil */
+            padding-top: 100px;
+            padding-left: 0;
+            padding-right: 0;
             text-align: center;
             background: var(--bg-color);
             color: var(--text-color);
             background-image: radial-gradient(var(--gradient-color) 1px, transparent 1px);
             background-size: 20px 20px;
-            transition: background-color 0.3s, color 0.3s; /* Smooth transition for theme change */
+            transition: background-color 0.3s, color 0.3s;
         }
 
         .container {
             padding: 20px;
             max-width: 600px;
             margin: auto;
-            /* Quitar padding-top si se agregó en body para evitar doble padding */
         }
 
-        /* --- Top-Left Utilities Styles (Language & Theme Toggles) --- */
+        /* --- Desktop Header Styles (Default) --- */
         .top-left-utilities {
             position: absolute;
             top: 20px;
-            left: 20px; /* Positioned to the left */
+            left: 20px;
             z-index: 1000;
             display: flex;
             align-items: center;
-            gap: 15px; /* Space between utility groups */
+            gap: 15px;
+        }
+
+        .top-nav {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
         }
 
         .lang-switcher, .theme-switcher {
@@ -87,14 +93,6 @@
             border-color: var(--link-hover-color);
         }
 
-        /* --- Top-Right Navigation Bar Styles --- */
-        .top-nav {
-            position: absolute;
-            top: 20px;
-            right: 20px; /* Positioned to the right */
-            z-index: 1000;
-        }
-
         .top-nav ul {
             list-style: none;
             margin: 0;
@@ -116,13 +114,13 @@
             border-bottom: 2px solid var(--link-hover-color);
         }
 
-        /* --- Existing Styles (adjustments for content below header if needed) --- */
+        /* --- General Content Styles --- */
         .profile-img {
             width: 200px;
             height: 200px;
             border-radius: 50%;
             object-fit: cover;
-            /* margin-top: 50px; -- REMOVED: Reemplazado por padding-top en el body */
+            /* En móvil se ajustará su margen superior */
         }
 
         h1 {
@@ -139,7 +137,7 @@
 
         section {
             margin-bottom: 40px;
-            padding-top: 20px; /* Puedes ajustar este padding si necesitas más espacio entre secciones */
+            padding-top: 20px;
         }
 
         .about p {
@@ -157,9 +155,8 @@
             font-weight: bold;
         }
 
-        /* Reusing social-media a style for contact link for consistency */
         .social-media a,
-        .contact-link { /* Added .contact-link to this selector */
+        .contact-link {
             display: block;
             margin: 10px auto;
             padding: 10px;
@@ -174,7 +171,7 @@
         }
 
         .social-media a:hover,
-        .contact-link:hover { /* Added .contact-link to this selector */
+        .contact-link:hover {
             background-color: var(--link-hover-color);
             color: white;
             border-color: var(--link-hover-color);
@@ -205,12 +202,65 @@
 
         .small {
             font-size: 0.9em;
-            color: gray; /* Keep grey for readability on both modes */
+            color: gray;
             margin-top: 10px;
         }
 
         a {
             color: inherit;
+        }
+
+        /* --- Media Queries for Small Screens (e.g., Mobiles and small tablets) --- */
+        @media (max-width: 600px) { /* Breakpoint para pantallas de hasta 600px de ancho */
+            body {
+                padding-top: 20px; /* Reducir o ajustar el padding superior en móvil */
+            }
+
+            /* Los elementos de la cabecera dejan de ser absolutos y fluyen */
+            .top-left-utilities,
+            .top-nav {
+                position: static; /* Cambiar a posicionamiento estático */
+                width: 100%; /* Ocupar todo el ancho disponible */
+                padding: 10px 0; /* Añadir padding vertical */
+                box-sizing: border-box; /* Incluir padding en el cálculo del ancho */
+                margin: 0; /* Resetear márgenes */
+                background: var(--bg-color); /* Asegurar que tengan un fondo si se superponen con algo debajo */
+                border-bottom: 1px solid var(--box-border-color); /* Opcional: separador visual */
+            }
+
+            .top-left-utilities {
+                display: flex; /* Mantener flexbox para sus botones internos */
+                justify-content: center; /* Centrar los botones de idioma/tema */
+                gap: 20px; /* Espacio entre los botones */
+                margin-bottom: 10px; /* Espacio entre los botones y la navegación */
+                border-bottom: none; /* No necesitamos doble borde si la nav tiene uno */
+            }
+
+            .top-nav ul {
+                flex-direction: column; /* Apilar los elementos del menú verticalmente */
+                align-items: center; /* Centrar los elementos del menú */
+                gap: 10px; /* Espacio entre elementos del menú apilados */
+                padding: 0;
+            }
+
+            .top-nav li {
+                width: 100%; /* Asegurar que cada item del menú ocupe todo el ancho */
+                text-align: center; /* Centrar el texto dentro de cada item */
+            }
+
+            .top-nav a {
+                display: block; /* Hacer que los enlaces ocupen todo el área del 'li' para facilitar el toque */
+                padding: 10px 0; /* Aumentar el padding para facilitar el toque */
+                border-bottom: none; /* Eliminar el borde inferior de los enlaces apilados */
+            }
+            .top-nav a:hover {
+                border-bottom: none; /* Eliminar el efecto de borde al pasar el ratón en móvil */
+            }
+
+            /* Ajustar el margen superior de la imagen de perfil para que no esté pegada */
+            .profile-img {
+                margin-top: 20px;
+            }
         }
     </style>
 </head>
@@ -241,7 +291,7 @@
         <section id="about" class="about">
             <h2 data-lang-en="About Me" data-lang-es="Sobre Mí">About Me</h2>
             <p data-lang-en="IT Support Specialist | Data Analyst | Blockchain, AI and Data Science Enthusiast" data-lang-es="Especialista en Soporte de TI | Analista de Datos | Entusiasta de Blockchain, IA y Ciencia de Datos">IT Support Specialist | Data Analyst | Blockchain, AI and Data Science Enthusiast</p>
-            <p data-lang-en="Interested in Blockchain & development and search for renewable electrical energy, its transmission and the area of telecommunications." data-lang-es="Interesado en Blockchain y el desarrollo, y la búsqueda de energía eléctrica renovable, su transmisión y el área de las telecomunicaciones.">Interested in Blockchain & development and search for renewable electrical energy, its transmission and the area of telecommunications.</p>
+            <p data-lang-en="Too interested in Blockchain & development and search for renewable electrical energy, its transmission and the area of telecommunications." data-lang-es="Demasiado interesado en Blockchain y el desarrollo, y la búsqueda de energía eléctrica renovable, su transmisión y el área de las telecomunicaciones.">Too interested in Blockchain & development and search for renewable electrical energy, its transmission and the area of telecommunications.</p>
         </section>
 
         <section class="social-media">
