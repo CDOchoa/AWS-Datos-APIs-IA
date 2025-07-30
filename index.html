@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
         :root {
-            /* Light Mode Variables */
             --bg-color: #fff;
             --text-color: #111;
             --gradient-color: #ccc;
@@ -15,8 +14,6 @@
             --box-border-color: #000;
             --box-bg-color: #fff;
         }
-
-        /* Dark Mode Variables */
         body.dark-mode {
             --bg-color: #1a1a1a;
             --text-color: #e0e0e0;
@@ -25,13 +22,10 @@
             --box-border-color: #555;
             --box-bg-color: #2a2a2a;
         }
-
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding-top: 100px;
-            padding-left: 0;
-            padding-right: 0;
             text-align: center;
             background: var(--bg-color);
             color: var(--text-color);
@@ -39,14 +33,11 @@
             background-size: 20px 20px;
             transition: background-color 0.3s, color 0.3s;
         }
-
         .container {
             padding: 20px;
             max-width: 600px;
             margin: auto;
         }
-
-        /* --- Desktop Header Styles (Default) --- */
         .top-left-utilities {
             position: absolute;
             top: 20px;
@@ -56,19 +47,16 @@
             align-items: center;
             gap: 15px;
         }
-
         .top-nav {
             position: absolute;
             top: 20px;
             right: 20px;
             z-index: 1000;
         }
-
         .lang-switcher, .theme-switcher {
             display: flex;
             gap: 5px;
         }
-
         .lang-switcher button, .theme-switcher button {
             background: none;
             border: 1px solid var(--box-border-color);
@@ -79,19 +67,16 @@
             cursor: pointer;
             transition: background-color 0.3s, color 0.3s, border-color 0.3s;
         }
-
         .lang-switcher button:hover, .theme-switcher button:hover {
             background-color: var(--link-hover-color);
             color: white;
             border-color: var(--link-hover-color);
         }
-
         .lang-switcher button.active {
             background-color: var(--link-hover-color);
             color: white;
             border-color: var(--link-hover-color);
         }
-
         .top-nav ul {
             list-style: none;
             margin: 0;
@@ -99,7 +84,6 @@
             display: flex;
             gap: 15px;
         }
-
         .top-nav a {
             text-decoration: none;
             color: var(--text-color);
@@ -108,43 +92,35 @@
             border-bottom: 2px solid transparent;
             transition: border-bottom 0.3s ease, color 0.3s;
         }
-
         .top-nav a:hover {
             border-bottom: 2px solid var(--link-hover-color);
         }
-
-        /* --- General Content Styles --- */
         .profile-img {
             width: 200px;
             height: 200px;
             border-radius: 50%;
             object-fit: cover;
         }
-
         h1 {
             font-size: 2.5em;
             margin: 10px 0 5px;
             font-weight: bold;
         }
-
         h2 {
             font-size: 1.5em;
             font-weight: normal;
             margin: 5px 0 20px;
         }
-
         section {
             margin-bottom: 40px;
             padding-top: 20px;
         }
-
         .about p {
             font-size: 1em;
             margin: 10px 0;
             line-height: 1.5;
             padding: 0 10px;
         }
-
         .social-media h2,
         .about h2,
         .tips h2,
@@ -152,7 +128,6 @@
             font-size: 1.8em;
             font-weight: bold;
         }
-
         .social-media a,
         .contact-link {
             display: block;
@@ -167,18 +142,15 @@
             border-radius: 6px;
             transition: background-color 0.3s, color 0.3s, border-color 0.3s;
         }
-
         .social-media a:hover,
         .contact-link:hover {
             background-color: var(--link-hover-color);
             color: white;
             border-color: var(--link-hover-color);
         }
-
         .social-media i {
             margin-right: 10px;
         }
-
         .tips-box {
             border: 2px solid var(--box-border-color);
             padding: 20px;
@@ -188,32 +160,25 @@
             background: var(--box-bg-color);
             transition: background-color 0.3s, border-color 0.3s;
         }
-
         .tips-box .icons {
             font-size: 28px;
             margin-bottom: 10px;
         }
-
         .icons i {
             margin: 0 10px;
         }
-
         .small {
             font-size: 0.9em;
             color: gray;
             margin-top: 10px;
         }
-
         a {
             color: inherit;
         }
-
-        /* --- Media Queries for Small Screens (e.g., Mobiles and small tablets) --- */
         @media (max-width: 600px) {
             body {
                 padding-top: 20px;
             }
-
             .top-left-utilities,
             .top-nav {
                 position: static;
@@ -224,7 +189,6 @@
                 background: var(--bg-color);
                 border-bottom: 1px solid var(--box-border-color);
             }
-
             .top-left-utilities {
                 display: flex;
                 justify-content: center;
@@ -232,19 +196,16 @@
                 margin-bottom: 10px;
                 border-bottom: none;
             }
-
             .top-nav ul {
                 flex-direction: column;
                 align-items: center;
                 gap: 10px;
                 padding: 0;
             }
-
             .top-nav li {
                 width: 100%;
                 text-align: center;
             }
-
             .top-nav a {
                 display: block;
                 padding: 10px 0;
@@ -253,7 +214,6 @@
             .top-nav a:hover {
                 border-bottom: none;
             }
-
             .profile-img {
                 margin-top: 20px;
             }
@@ -281,8 +241,8 @@
 
     <div class="container">
         <img src="profile.jpeg" alt="Profile Picture" class="profile-img" />
-        <h1>CDochoa</h1>
-        <h2 data-lang-en="Data Analyst & Developer Backend" data-lang-es="Analista de Datos y Desarrollador Backend">Data Analyst & Developer Backend</h2>
+        <h1>Carlos Ochoa</h1>
+        <h2 data-lang-en="Data Analyst - Engineering" data-lang-es="Analista e Ingeniero de Datos">Data Analyst - Engineering</h2>
 
         <section id="about" class="about">
             <h2 data-lang-en="About Me" data-lang-es="Sobre Mí">About Me</h2>
@@ -300,9 +260,9 @@
             <div class="tips-box">
                 <div class="icons">
                     <i class="fab fa-bitcoin"></i>
-                    <i class="fab fa-litecoin"></i>
+                    <i class="fas fa-coins"></i>
                     <i class="fab fa-ethereum"></i>
-                    <i class="fab fa-xrp"></i>
+                    <i class="fas fa-dollar-sign"></i>
                 </div>
                 <p><strong>mycdochoa.blockchain</strong></p>
             </div>
@@ -323,70 +283,36 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- Language Toggle Logic ---
             const langButtons = document.querySelectorAll('.lang-switcher button');
             const storedLang = localStorage.getItem('portfolioLang') || 'en';
-
             const applyLanguage = (lang) => {
-                document.documentElement.lang = lang; // Set HTML lang attribute
-                document.querySelectorAll('[data-lang-en], [data-lang-es]').forEach(element => {
-                    const text = element.getAttribute(`data-lang-${lang}`);
-                    if (text !== null) { // Check if attribute exists
-                        if (element.tagName === 'TITLE') { // Handle title separately
-                            document.title = text;
-                        } else {
-                            const tempDiv = document.createElement('div');
-                            tempDiv.innerHTML = text;
-                            if (element.children.length === 0 || !element.innerHTML.includes('<')) {
-                                element.textContent = text;
-                            } else {
-                                element.innerHTML = text;
-                            }
-                        }
+                document.documentElement.lang = lang;
+                document.querySelectorAll('[data-lang-en], [data-lang-es]').forEach(el => {
+                    const text = el.getAttribute(`data-lang-${lang}`);
+                    if (text !== null) {
+                        el.tagName === 'TITLE' ? document.title = text : el.innerHTML = text;
                     }
                 });
-
-                langButtons.forEach(button => {
-                    button.classList.remove('active');
-                    if (button.id.endsWith(lang)) {
-                        button.classList.add('active');
-                    }
-                });
+                langButtons.forEach(btn => btn.classList.toggle('active', btn.id.endsWith(lang)));
             };
-
-            langButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const lang = button.id.replace('lang-', '');
-                    localStorage.setItem('portfolioLang', lang);
-                    applyLanguage(lang);
-                });
-            });
-
-            // Initial language application
+            langButtons.forEach(btn => btn.addEventListener('click', () => {
+                const lang = btn.id.replace('lang-', '');
+                localStorage.setItem('portfolioLang', lang);
+                applyLanguage(lang);
+            }));
             applyLanguage(storedLang);
 
-            // --- Theme Toggle Logic ---
             const themeToggleBtn = document.getElementById('theme-toggle');
             const storedTheme = localStorage.getItem('portfolioTheme') || 'light';
-
             const applyTheme = (theme) => {
-                if (theme === 'dark') {
-                    document.body.classList.add('dark-mode');
-                    themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>'; // Sun icon for light mode
-                } else {
-                    document.body.classList.remove('dark-mode');
-                    themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>'; // Moon icon for dark mode
-                }
+                document.body.classList.toggle('dark-mode', theme === 'dark');
+                themeToggleBtn.innerHTML = theme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
             };
-
             themeToggleBtn.addEventListener('click', () => {
-                let currentTheme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
-                let newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                const newTheme = document.body.classList.contains('dark-mode') ? 'light' : 'dark';
                 localStorage.setItem('portfolioTheme', newTheme);
                 applyTheme(newTheme);
             });
-
-            // Initial theme application
             applyTheme(storedTheme);
         });
     </script>
